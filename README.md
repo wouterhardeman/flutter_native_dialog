@@ -6,7 +6,7 @@ If you are needed integrating Flutter in your existing app, you are better off u
 
 ## Usage
 
-To use this plugin, add `shared_preferences` as a [dependency in your pubspec.yaml file](https://flutter.io/docs/development/packages-and-plugins/using-packages).
+To use this plugin, add `flutter_native_dialog` as a [dependency in your pubspec.yaml file](https://flutter.io/docs/development/packages-and-plugins/using-packages).
 
 ## Example
 
