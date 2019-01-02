@@ -37,12 +37,13 @@ class FlutterNativeDialog {
   /// the user clicks on [positiveButtonText] this will return true. When the
   /// user clicks on [negativeButtonText] this will return false. [destructive]
   /// can be set to true to show the user this is a destructive operation (only on iOS).
-  static Future<bool> showConfirmDialog(
-      {String title,
-      String message,
-      String positiveButtonText = DEFAULT_POSITIVE_BUTTON_TEXT,
-      String negativeButtonText = DEFAULT_NEGATIVE_BUTTON_TEXT,
-      bool destructive = false}) async {
+  static Future<bool> showConfirmDialog({
+    String title,
+    String message,
+    String positiveButtonText = DEFAULT_POSITIVE_BUTTON_TEXT,
+    String negativeButtonText = DEFAULT_NEGATIVE_BUTTON_TEXT,
+    bool destructive = false,
+  }) async {
     return await _channel.invokeMethod(
       'dialog.confirm',
       {
@@ -50,7 +51,7 @@ class FlutterNativeDialog {
         "message": message,
         "positiveButtonText": positiveButtonText,
         "negativeButtonText": negativeButtonText,
-        "destructive": destructive
+        "destructive": destructive,
       },
     );
   }
