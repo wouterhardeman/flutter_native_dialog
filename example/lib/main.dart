@@ -21,10 +21,11 @@ class _MyAppState extends State<MyApp> {
 
   void _showConfirmDialog() async {
     final result = await FlutterNativeDialog.showConfirmDialog(
-        title: "This is a confirm dialog",
-        message: "A message in the dialog",
-        positiveButtonText: "OK",
-        negativeButtonText: "Cancel");
+      title: "This is a confirm dialog",
+      message: "A message in the dialog",
+      positiveButtonText: "OK",
+      negativeButtonText: "Cancel",
+    );
     setState(() {
       confirmReturnedTrue = result;
     });
@@ -32,10 +33,11 @@ class _MyAppState extends State<MyApp> {
 
   void _showDestructiveConfirmDialog() async {
     final result = await FlutterNativeDialog.showConfirmDialog(
-        title: "This is a descructive confirm dialog",
-        message: "A message in the dialog",
-        positiveButtonText: "Delete",
-        negativeButtonText: "Cancel");
+      title: "This is a descructive confirm dialog",
+      message: "A message in the dialog",
+      positiveButtonText: "Delete",
+      negativeButtonText: "Cancel",
+    );
     setState(() {
       destructiveConfirmReturnedTrue = result;
     });
@@ -74,7 +76,7 @@ class _MyAppState extends State<MyApp> {
                   "Destructive confirm dialog returned: " +
                       destructiveConfirmReturnedTrue.toString(),
                   textAlign: TextAlign.center,
-                )
+                ),
               ],
             ),
           ),

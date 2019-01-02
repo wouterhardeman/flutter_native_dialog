@@ -55,20 +55,6 @@ class FlutterNativeDialog {
     );
   }
 
-  // static Future<String> showDatePickerDialog({
-  //   String title,
-  //   String message,
-  // }) async {
-  //   final result = await _channel.invokeMethod(
-  //     'dialog.input.date',
-  //     {
-  //       "title": title,
-  //       "message": message,
-  //     },
-  //   );
-  //   return result == false ? null : result;
-  // }
-
   @visibleForTesting
   static void setMockCallHandler(Future<dynamic> handler(MethodCall call)) {
     _channel.setMockMethodCallHandler(handler);
