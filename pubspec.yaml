@@ -12,6 +12,10 @@ dependencies:
     sdk: flutter
   meta: ^1.1.6
 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
 flutter:
   plugin:
     androidPackage: nl.wouterhardeman.flutternativedialog
