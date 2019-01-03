@@ -9,38 +9,59 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Verify Alert Dialog', (WidgetTester tester) async {
-    const alertDialogParametersReturnTrue = {
+    const alertDialogParameters = {
       "title": "An alert appeared",
       "message": "An alert message"
     };
 
-    const alertDialogParametersReturnFalse = {
-      "title": "An alert that will return false appeared",
-      "message": "An alert message that will return false"
-    };
-
     FlutterNativeDialog.setMockCallHandler((call) {
       if (call.method == "dialog.alert") {
-        if (call.arguments["title"] ==
-            alertDialogParametersReturnTrue["title"]) {
+        if (call.arguments["title"] == alertDialogParameters["title"]) {
           return Future.value(true);
-        }
-        if (call.arguments["title"] ==
-            alertDialogParametersReturnFalse["title"]) {
-          return Future.value(false);
         }
       }
     });
 
     var result = await FlutterNativeDialog.showAlertDialog(
-      title: alertDialogParametersReturnTrue["title"],
-      message: alertDialogParametersReturnTrue["message"],
+      title: alertDialogParameters["title"],
+      message: alertDialogParameters["message"],
+    );
+    expect(true, result);
+  });
+
+  testWidgets("Verify Confirm Dialog", (WidgetTester tester) async {
+    const confirmDialogParametersReturnTrue = {
+      "title": "A confirm dialog appeared",
+      "message": "A confirm dialog message"
+    };
+
+    const confirmDialogParametersReturnFalse = {
+      "title": "A confirm dialog that will return false appeared",
+      "message": "An confirm dialog that will return false"
+    };
+
+    FlutterNativeDialog.setMockCallHandler((call) {
+      if (call.method == "dialog.confirm") {
+        if (call.arguments["title"] ==
+            confirmDialogParametersReturnTrue["title"]) {
+          return Future.value(true);
+        }
+        if (call.arguments["title"] ==
+            confirmDialogParametersReturnFalse["title"]) {
+          return Future.value(false);
+        }
+      }
+    });
+
+    var result = await FlutterNativeDialog.showConfirmDialog(
+      title: confirmDialogParametersReturnTrue["title"],
+      message: confirmDialogParametersReturnTrue["message"],
     );
     expect(true, result);
 
-    result = await FlutterNativeDialog.showAlertDialog(
-      title: alertDialogParametersReturnFalse["title"],
-      message: alertDialogParametersReturnFalse["message"],
+    result = await FlutterNativeDialog.showConfirmDialog(
+      title: confirmDialogParametersReturnFalse["title"],
+      message: confirmDialogParametersReturnFalse["message"],
     );
     expect(false, result);
   });
