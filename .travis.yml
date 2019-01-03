@@ -27,10 +27,11 @@ matrix:
         - bash update_flutter.sh
         - ./flutter/bin/flutter doctor
       script:
-        - ./flutter/bin/flutter analyze
         - cd example/
-        - ./../flutter/bin/flutter test
         - ./../flutter/bin/flutter build apk
+        - ./../flutter/bin/flutter test
+        - cd ..
+        - ./flutter/bin/flutter analyze
     - name: "iOS 11.3"
       language: objective-c
       os: osx
@@ -44,4 +45,4 @@ matrix:
         - ./flutter/bin/flutter doctor
         - cd example/
         - ./../flutter/bin/flutter test
-      script: ./../flutter/bin/flutter build ios
+      script: ./../flutter/bin/flutter build ios --no-codesign
