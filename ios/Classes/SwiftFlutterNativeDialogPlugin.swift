@@ -3,9 +3,6 @@ import UIKit
 
 public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
     
-    static let DEFAULT_POSITIVE_BUTTON_TEST: String = "OK"
-    static let DEFAULT_NEGATIVE_BUTTON_TEST: String = "Cancel"
-    
     public static func register(with registrar: FlutterPluginRegistrar) {
         // Need to make registrar an optional to supress Swift compiler warning
         let pluginRegistrar: FlutterPluginRegistrar? = registrar
@@ -17,47 +14,51 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if let arguments = call.arguments as? Dictionary<String, Any> {
-            if (call.method.starts(with: "dialog.")) {
-                let alertController = buildAlertController(title: arguments["title"] as? String, message: arguments["message"] as? String)
-                
-                if (call.method == "dialog.alert") {
-                    alertController.addAction(UIAlertAction(title: arguments["positiveButtonText"] as? String ?? SwiftFlutterNativeDialogPlugin.DEFAULT_POSITIVE_BUTTON_TEST, style: .default, handler: { _ in
-                        result(true)
-                    }))
-                    if let topController = getTopViewController() {
-                        topController.present(alertController, animated: true)
-                    }
-                }
-                
-                if (call.method == "dialog.confirm") {
-                    alertController.addAction(UIAlertAction(title: arguments["positiveButtonText"] as? String ?? SwiftFlutterNativeDialogPlugin.DEFAULT_POSITIVE_BUTTON_TEST, style: arguments["destructive"] as? Bool ?? false ? .destructive : .default, handler: { _ in
-                        result(true)
-                    }))
-                    alertController.addAction(UIAlertAction(title: arguments["negativeButtonText"] as? String ?? SwiftFlutterNativeDialogPlugin.DEFAULT_NEGATIVE_BUTTON_TEST, style: .cancel, handler: { _ in
-                        result(false)
-                    }))
-                }
-                
-                if let topController = getTopViewController() {
-                    topController.present(alertController, animated: true)
-                }
-            } else {
-                result(FlutterMethodNotImplemented)
-            }
-        } else {
+        if (!call.method.starts(with: "dialog.")) {
             result(FlutterMethodNotImplemented)
+            return
         }
+        
+        let alertData = AlertData(withDictionary: call.arguments as! Dictionary<String, Any>)
+        let alertController = buildAlert(method: call.method, alertData: alertData, result: result)
+        
+        if let topController = getTopViewController() {
+            topController.present(alertController, animated: true)
+        } else {
+            result(FlutterError(code: "no_view_controller", message: "No ViewController available to present a dialog", details: nil))
+        }
+    }
+    
+    private func buildAlert(method: String, alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
+        switch method {
+        case "dialog.confirm":
+            return buildConfirmDialog(alertData: alertData, result: result)
+        default:
+            return buildAlertDialog(alertData: alertData, result: result)
+        }
+    }
+    
+    private func buildAlertDialog(alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
+        let alertController = buildAlertController(title: alertData.title, message: alertData.message)
+        alertController.addAction(UIAlertAction(title: alertData.positiveButtonMessage, style: .default, handler: { _ in
+            result(true)
+        }))
+        return alertController
+    }
+    
+    private func buildConfirmDialog(alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
+        let alertController = buildAlertController(title: alertData.title, message: alertData.message)
+        alertController.addAction(UIAlertAction(title: alertData.positiveButtonMessage, style: alertData.destructive ? .destructive : .default, handler: { _ in
+            result(true)
+        }))
+        alertController.addAction(UIAlertAction(title: alertData.negativeButtonMessage, style: .cancel, handler: { _ in
+            result(false)
+        }))
+        return alertController
     }
     
     private func buildAlertController(title: String?, message: String?) -> UIAlertController {
         return UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-    }
-    
-    private func getDefaultPositiveAction(title: String? = SwiftFlutterNativeDialogPlugin.DEFAULT_POSITIVE_BUTTON_TEST, result: @escaping FlutterResult) -> UIAlertAction {
-        return UIAlertAction(title: title ?? SwiftFlutterNativeDialogPlugin.DEFAULT_POSITIVE_BUTTON_TEST, style: .default, handler: { _ in
-            result(true)
-        })
     }
     
     private func getTopViewController() -> UIViewController? {
