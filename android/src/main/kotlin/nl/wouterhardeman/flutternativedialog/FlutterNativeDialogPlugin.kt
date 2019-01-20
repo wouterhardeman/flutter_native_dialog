@@ -1,6 +1,5 @@
 package nl.wouterhardeman.flutternativedialog
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import io.flutter.plugin.common.MethodCall
@@ -14,8 +13,10 @@ class FlutterNativeDialogPlugin(val activity: Activity) : MethodCallHandler {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "flutter_native_dialog")
-      channel.setMethodCallHandler(FlutterNativeDialogPlugin(registrar.activity()))
+      if (registrar.activity() != null) {
+        val channel = MethodChannel(registrar.messenger(), "flutter_native_dialog")
+        channel.setMethodCallHandler(FlutterNativeDialogPlugin(registrar.activity()))
+      }
     }
   }
 
