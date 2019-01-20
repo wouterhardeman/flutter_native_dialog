@@ -9,8 +9,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool confirmReturnedTrue;
-  bool destructiveConfirmReturnedTrue;
+  bool confirmDialogResult;
+  bool destructiveConfirmDialogResult;
 
   void _showAlertDialog() {
     FlutterNativeDialog.showAlertDialog(
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       negativeButtonText: "Cancel",
     );
     setState(() {
-      confirmReturnedTrue = result;
+      confirmDialogResult = result;
     });
   }
 
@@ -37,9 +37,10 @@ class _MyAppState extends State<MyApp> {
       message: "A message in the dialog",
       positiveButtonText: "Delete",
       negativeButtonText: "Cancel",
+      destructive: true,
     );
     setState(() {
-      destructiveConfirmReturnedTrue = result;
+      destructiveConfirmDialogResult = result;
     });
   }
 
@@ -65,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: _showConfirmDialog,
                 ),
                 Text(
-                  "Confirm dialog returned: " + confirmReturnedTrue.toString(),
+                  "Confirm dialog returned: " + confirmDialogResult.toString(),
                   textAlign: TextAlign.center,
                 ),
                 RaisedButton(
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Text(
                   "Destructive confirm dialog returned: " +
-                      destructiveConfirmReturnedTrue.toString(),
+                      destructiveConfirmDialogResult.toString(),
                   textAlign: TextAlign.center,
                 ),
               ],
