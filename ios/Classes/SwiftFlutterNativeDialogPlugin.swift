@@ -40,7 +40,7 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
     
     private func buildAlertDialog(alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
         let alertController = buildAlertController(title: alertData.title, message: alertData.message)
-        alertController.addAction(UIAlertAction(title: alertData.positiveButtonMessage, style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: alertData.positiveButtonText, style: .default, handler: { _ in
             result(true)
         }))
         return alertController
@@ -48,10 +48,10 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
     
     private func buildConfirmDialog(alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
         let alertController = buildAlertController(title: alertData.title, message: alertData.message)
-        alertController.addAction(UIAlertAction(title: alertData.positiveButtonMessage, style: alertData.destructive ? .destructive : .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: alertData.positiveButtonText, style: alertData.destructive ? .destructive : .default, handler: { _ in
             result(true)
         }))
-        alertController.addAction(UIAlertAction(title: alertData.negativeButtonMessage, style: .cancel, handler: { _ in
+        alertController.addAction(UIAlertAction(title: alertData.negativeButtonText, style: .cancel, handler: { _ in
             result(false)
         }))
         return alertController
