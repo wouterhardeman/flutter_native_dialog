@@ -8,19 +8,19 @@
 import Foundation
 
 struct AlertData {
-    static let DEFAULT_POSITIVE_BUTTON_TEST: String = "OK"
-    static let DEFAULT_NEGATIVE_BUTTON_TEST: String = "Cancel"
+    static let DEFAULT_POSITIVE_BUTTON_TEXT: String = "OK"
+    static let DEFAULT_NEGATIVE_BUTTON_TEXT: String = "Cancel"
     
     let title: String?
     let message: String?
-    let positiveButtonMessage: String
-    let negativeButtonMessage: String
+    let positiveButtonText: String
+    let negativeButtonText: String
     let destructive: Bool
     init(withDictionary dictionary: [String: Any]) {
         self.title = dictionary["title"] as? String
         self.message = dictionary["message"] as? String
-        self.positiveButtonMessage = dictionary["positiveButtonMessage"] as? String ?? AlertData.DEFAULT_POSITIVE_BUTTON_TEST
-        self.negativeButtonMessage = dictionary["negativeButtonMessage"] as? String ?? AlertData.DEFAULT_NEGATIVE_BUTTON_TEST
+        self.positiveButtonText = dictionary["positiveButtonText"] as? String ?? AlertData.DEFAULT_POSITIVE_BUTTON_TEXT
+        self.negativeButtonText = dictionary["negativeButtonText"] as? String ?? AlertData.DEFAULT_NEGATIVE_BUTTON_TEXT
         self.destructive = dictionary["destructive"] as? Bool ?? false
     }
     
