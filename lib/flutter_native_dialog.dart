@@ -56,6 +56,25 @@ class FlutterNativeDialog {
     );
   }
 
+  static Future<String> showTextInputDialog({
+    String title,
+    String message,
+    String placeholder,
+    String positiveButtonText = DEFAULT_POSITIVE_BUTTON_TEXT,
+    String negativeButtonText = DEFAULT_NEGATIVE_BUTTON_TEXT
+  }) async {
+    return await _channel.invokeMethod(
+      'dialog.text-input',
+      {
+        "title": title,
+        "message": message,
+        "placeholder": placeholder,
+        "positiveButtonText": positiveButtonText,
+        "negativeButtonText": negativeButtonText,
+      },
+    );
+  }
+
   @visibleForTesting
   static void setMockCallHandler(Future<dynamic> handler(MethodCall call)) {
     _channel.setMockMethodCallHandler(handler);

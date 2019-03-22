@@ -33,6 +33,8 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
         switch method {
         case "dialog.confirm":
             return buildConfirmDialog(alertData: alertData, result: result)
+        case "dialog.text-input":
+            return buildTextInputDialog(alertData: alertData, result: result)
         default:
             return buildAlertDialog(alertData: alertData, result: result)
         }
@@ -53,6 +55,20 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
         }))
         alertController.addAction(UIAlertAction(title: alertData.negativeButtonText, style: .cancel, handler: { _ in
             result(false)
+        }))
+        return alertController
+    }
+    
+    private func buildTextInputDialog(alertData: AlertData, result: @escaping FlutterResult) -> UIAlertController {
+        let alertController = buildAlertController(title: alertData.title, message: alertData.message)
+        alertController.addTextField { (textField: UITextField) in
+            textField.placeholder = alertData.placeholder
+        }
+        alertController.addAction(UIAlertAction(title: alertData.positiveButtonText, style: alertData.destructive ? .destructive : .default, handler: { (alertAction: UIAlertAction) in
+            result(alertController.textFields?[0].text)
+        }))
+        alertController.addAction(UIAlertAction(title: alertData.negativeButtonText, style: .cancel, handler: { _ in
+            result("")
         }))
         return alertController
     }

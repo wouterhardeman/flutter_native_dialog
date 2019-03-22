@@ -11,6 +11,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool confirmDialogResult;
   bool destructiveConfirmDialogResult;
+  String textInputDialogResult;
 
   void _showAlertDialog() {
     FlutterNativeDialog.showAlertDialog(
@@ -41,6 +42,18 @@ class _MyAppState extends State<MyApp> {
     );
     setState(() {
       destructiveConfirmDialogResult = result;
+    });
+  }
+
+  void _showTextInputDialog() async {
+    final result = await FlutterNativeDialog.showTextInputDialog(
+      title: "This is a descructive confirm dialog",
+      message: "A message in the dialog",
+      positiveButtonText: "Submit",
+      negativeButtonText: "Cancel"
+    );
+    setState(() {
+      textInputDialogResult = result;
     });
   }
 
@@ -76,6 +89,15 @@ class _MyAppState extends State<MyApp> {
                 Text(
                   "Destructive confirm dialog returned: " +
                       destructiveConfirmDialogResult.toString(),
+                  textAlign: TextAlign.center,
+                ),
+                RaisedButton(
+                  child: Text("Text input dialog"),
+                  onPressed: _showTextInputDialog,
+                ),
+                Text(
+                  "Text input dialog returned: " +
+                      textInputDialogResult.toString(),
                   textAlign: TextAlign.center,
                 ),
               ],

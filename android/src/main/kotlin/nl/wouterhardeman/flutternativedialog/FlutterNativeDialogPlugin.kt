@@ -2,6 +2,8 @@ package nl.wouterhardeman.flutternativedialog
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.text.InputType
+import android.widget.EditText
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -41,6 +43,15 @@ class FlutterNativeDialogPlugin(val activity: Activity) : MethodCallHandler {
         .setPositiveButton(call.argument<String>("positiveButtonText")) { _, _ -> result.success(true) }
         .setNegativeButton(call.argument<String>("negativeButtonText")) { _, _ -> result.success(false) }
         .setCancelable(false)
+    }
+    if (call.method == "dialog.text-input") {
+      val input = EditText(this.activity)
+      input.inputType = InputType.TYPE_CLASS_TEXT
+      input.hint = call.argument<String>("placeholder")
+      builder
+        .setPositiveButton(call.argument<String>("positiveButtonText")) { _, _ -> result.success(input.text.toString()) }
+        .setNegativeButton(call.argument<String>("negativeButtonText")) { _, _ -> result.success(false) }
+        .setView(input)
     }
 
     builder.create().show()
