@@ -70,12 +70,9 @@ void main() {
     const output = "Some text inserted";
 
     FlutterNativeDialog.setMockCallHandler((call) {
-      print(call);
-      if (call.method == "dialog.text-input" && call.arguments["title"] == title) {
-        print("CORRECT");
-        return Future.value(output);
-      }
-      return Future.value(null);
+      return call.method == "dialog.text-input" && call.arguments["title"] == title
+        ? Future.value(output)
+        : Future.value(null);
     });
 
     var result = await FlutterNativeDialog.showTextInputDialog(title: title);
