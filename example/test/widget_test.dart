@@ -15,11 +15,9 @@ void main() {
     };
 
     FlutterNativeDialog.setMockCallHandler((call) {
-      if (call.method == "dialog.alert") {
-        if (call.arguments["title"] == alertDialogParameters["title"]) {
-          return Future.value(true);
-        }
-      }
+      return call.method == "dialog.alert" && call.arguments["title"] == alertDialogParameters["title"]
+        ? Future.value(true)
+        : Future.value(false);
     });
 
     var result = await FlutterNativeDialog.showAlertDialog(
@@ -51,6 +49,7 @@ void main() {
           return Future.value(false);
         }
       }
+      return Future.value(false);
     });
 
     var result = await FlutterNativeDialog.showConfirmDialog(
@@ -64,5 +63,26 @@ void main() {
       message: confirmDialogParametersReturnFalse["message"],
     );
     expect(false, result);
+  });
+
+  testWidgets("Verify Text Input Dialog", (WidgetTester tester) async {
+    const title = "A text input dialog";
+    const output = "Some text inserted";
+
+    FlutterNativeDialog.setMockCallHandler((call) {
+      print(call);
+      if (call.method == "dialog.text-input" && call.arguments["title"] == title) {
+        print("CORRECT");
+        return Future.value(output);
+      }
+      return Future.value(null);
+    });
+
+    var result = await FlutterNativeDialog.showTextInputDialog(title: title);
+    expect(output, result);
+
+    result = await FlutterNativeDialog.showTextInputDialog(title: "Some random text");
+    expect(null, result);
+
   });
 }

@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   void _showTextInputDialog() async {
     final result = await FlutterNativeDialog.showTextInputDialog(
-      title: "This is a descructive confirm dialog",
+      title: "This is a text input dialog",
       message: "A message in the dialog",
       positiveButtonText: "Submit",
       negativeButtonText: "Cancel"

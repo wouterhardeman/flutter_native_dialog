@@ -56,6 +56,13 @@ class FlutterNativeDialog {
     );
   }
 
+  /// Shows an alert dialog with a text input
+  ///
+  /// This alert contains an optional [title] and [message]. [placeholder] will
+  /// be shown in the text input. [positiveButtonText] and [negativeButtonText]
+  /// will be shown on the corresponding buttons. When the user clicks on
+  /// [positiveButtonText] this will return the given input. When the user clicks on
+  /// [negativeButtonText] or cancels the dialog in another way this will return null.
   static Future<String> showTextInputDialog({
     String title,
     String message,

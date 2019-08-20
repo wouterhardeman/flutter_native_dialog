@@ -68,7 +68,7 @@ public class SwiftFlutterNativeDialogPlugin: NSObject, FlutterPlugin {
             result(alertController.textFields?[0].text)
         }))
         alertController.addAction(UIAlertAction(title: alertData.negativeButtonText, style: .cancel, handler: { _ in
-            result("")
+            result(nil)
         }))
         return alertController
     }

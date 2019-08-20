@@ -50,7 +50,7 @@ class FlutterNativeDialogPlugin(val activity: Activity) : MethodCallHandler {
       input.hint = call.argument<String>("placeholder")
       builder
         .setPositiveButton(call.argument<String>("positiveButtonText")) { _, _ -> result.success(input.text.toString()) }
-        .setNegativeButton(call.argument<String>("negativeButtonText")) { _, _ -> result.success(false) }
+        .setNegativeButton(call.argument<String>("negativeButtonText")) { _, _ -> result.success(null) }
         .setView(input)
     }
 
