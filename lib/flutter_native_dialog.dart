@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 const MethodChannel _channel = const MethodChannel('flutter_native_dialog');
 
@@ -82,7 +81,6 @@ class FlutterNativeDialog {
     );
   }
 
-  @visibleForTesting
   static void setMockCallHandler(Future<dynamic> handler(MethodCall call)) {
     _channel.setMockMethodCallHandler(handler);
   }
