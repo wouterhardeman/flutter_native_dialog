@@ -3,16 +3,19 @@ branches:
     - master
 matrix:
   include:
-    - name: "Android API Level 27"
+    - name: "Android API Level 28"
       language: android
       android:
         components:
-          - build-tools-28.0.3
-          - android-27
-
+          - tools
+          - platform-tools
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
+      before_install:
+        - touch $HOME/.android/repositories.cfg
+        - yes | sdkmanager "platforms;android-28"
+        - yes | sdkmanager "build-tools;29.0.2"
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -39,7 +42,7 @@ matrix:
         directories:
           - $HOME/.pub-cache
           - flutter
-      osx_image: xcode10.1
+      osx_image: xcode10.3
       before_install:
         - bash update_flutter.sh
         - ./flutter/bin/flutter doctor
